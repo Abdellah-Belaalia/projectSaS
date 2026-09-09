@@ -186,41 +186,48 @@ const trips = [
 function affichage(trips) {
     console.log("=== TRAJETS DISPONIBLES ===")
     for (let traj of trips) {
-        console.log(
-            "#", traj.id, traj.departure, "→", traj.destination, `\n`,
-            "Départ : ", traj.departureTime, `\n`,
-            "Arrivé : ", traj.arrivalTime, `\n`,
-            "Prix : ", traj.price, "DH", `\n`,
-            "Places disponibles : ", traj.availableSeats, "\n")
+        if (traj.availableSeats > 0) {
+            console.log(
+                "#", traj.id, traj.departure, "→", traj.destination, `\n`,
+                "Départ : ", traj.departureTime, `\n`,
+                "Arrivé : ", traj.arrivalTime, `\n`,
+                "Prix : ", traj.price, "DH", `\n`,
+                "Places disponibles : ", traj.availableSeats, "\n")
+        }
     }
-
 }
-let ticketId = 1;
+let ticketId = 0;
 const tickest = []
 function acheter() {
     let passengerName = prompt("Nom de passager :")
-    let traject = Number(parseInt(prompt("Entrez le Id de trips : ")));
+    let traject = parseInt(prompt("Entrez le Id de trips : "));
     let trouve = false;
     for (let i = 0; i < trips.length; i++) {
-        if (trips[i].id === traject && trips[i].availableSeats <= 50) {
+        if (trips[i].id === traject && trips[i].availableSeats > 0) {
             trouve = true
             let newTicket = {
                 id: ticketId++,
                 passengerName: passengerName,
                 tripId: trips[i].id,
-                seatNumber: 1,
+                seatNumber: 50 - trips[i].availableSeats + 1,   //le nombre des places disponible est 50 ce qu'il fait on doit dimunier le nombre des places ajouté d'après les places disponible puis en ajouter 1 car l'index début d'après 0
                 price: trips[i].price
             }
-            tickest.push(newTicket);
-            // console.log("Trajet trouvée")
+            tickest[tickest.length] = newTicket // tickest.push(newTicket); la longueur du tableau est index 0 après la première achate/newTicket 
+            trips[i].availableSeats--
+            console.log(`============Ticket acheté avec succès============\nTicket :${ticketId}\nPassenger :${passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPlace : ${newTicket.seatNumber}`)
             break;
         }
-        console.log(tickest)
+        else if (trips[i].id === traject && trips[i].availableSeats == 0) {
+            trouve = true
+            console.log("Train complet")
+        }
     }
     if (trouve === false) {
         console.log("Trajet introuvable");
     }
 }
+
+
 
 let option;
 do {
@@ -237,7 +244,7 @@ do {
 0. Quitter `);
 
     do {
-        option = Number(parseInt(prompt('Entrez votre choix : ')))
+        option = parseInt(prompt('Entrez votre choix : '))
         if (option < 0 || option > 7)
             console.log("Choix indisponible !! Essayer ultérierement")
     }
@@ -245,23 +252,23 @@ do {
 
     switch (option) {
         case 1:
-            console.log(affichage(trips))
+            affichage(trips)
             break;
         case 2:
-            console.log(acheter());
+            acheter();
             break;
-        case 3:
-            console.log.afficher(/*ticket,"paramètre afficher les tickect"*/);
-            break;
-        case 4:
-            console.log.annuler(/*ticket,"paramètre annuler un ticket"*/);
-            break;
-        case 5:
-            console.log.rechercher(/*ticket,"paramètre rechercher un ticket"*/);
-            break;
-        case 6:
-            console.log.trier(/*trajets,"paramètre trier un ticket"*/);
-            break;
+        // case 3:
+        //     console.log.afficher(/*ticket,"paramètre afficher les tickect"*/);
+        //     break;
+        // case 4:
+        //     console.log.annuler(/*ticket,"paramètre annuler un ticket"*/);
+        //     break;
+        // case 5:
+        //     console.log.rechercher(/*ticket,"paramètre rechercher un ticket"*/);
+        //     break;
+        // case 6:
+        //     console.log.trier(/*trajets,"paramètre trier un ticket"*/);
+        //     break;
         case 0:
             console.log("Vous avez quitter")
             break;

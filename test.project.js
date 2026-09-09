@@ -183,18 +183,10 @@ const trips = [
     }
 ];
 
-function affichage(trips) {
-    console.log("=== TRAJETS DISPONIBLES ===")
-    for (let traj of trips) {
-        console.log(
-            "#", traj.id, traj.departure, "→", traj.destination, `\n`,
-            "Départ : ", traj.departureTime, `\n`,
-            "Arrivé : ", traj.arrivalTime, `\n`,
-            "Prix : ", traj.price, "DH", `\n`,
-            "Places disponibles : ", traj.availableSeats, "\n")
-    }
+// function affichage(trips) {
+//     for (let i = 0; i < trips; i++);
+//     return trips
 
-}
 let ticketId = 1;
 const tickest = []
 function acheter() {
@@ -202,7 +194,7 @@ function acheter() {
     let traject = Number(parseInt(prompt("Entrez le Id de trips : ")));
     let trouve = false;
     for (let i = 0; i < trips.length; i++) {
-        if (trips[i].id === traject && trips[i].availableSeats <= 50) {
+        if (trips[i].id === traject && trips[i].availableSeats  <= 50) {
             trouve = true
             let newTicket = {
                 id: ticketId++,
@@ -212,60 +204,63 @@ function acheter() {
                 price: trips[i].price
             }
             tickest.push(newTicket);
-            // console.log("Trajet trouvée")
+            console.log("Trajet trouvée")
             break;
         }
-        console.log(tickest)
     }
     if (trouve === false) {
         console.log("Trajet introuvable");
     }
 }
 
-let option;
-do {
-    console.log(`================================= 
-        RAILWAY MANAGER 
-================================= 
-1. Afficher les trajets 
-2. Acheter un ticket 
-3. Afficher les tickets 
-4. Annuler un ticket 
-5. Rechercher un ticket 
-6. Filtrer les trajets 
-7. Trier les trajets 
-0. Quitter `);
+acheter()
 
-    do {
-        option = Number(parseInt(prompt('Entrez votre choix : ')))
-        if (option < 0 || option > 7)
-            console.log("Choix indisponible !! Essayer ultérierement")
-    }
-    while (option < 0 || option > 7);
+console.log(tickest)
 
-    switch (option) {
-        case 1:
-            console.log(affichage(trips))
-            break;
-        case 2:
-            console.log(acheter());
-            break;
-        case 3:
-            console.log.afficher(/*ticket,"paramètre afficher les tickect"*/);
-            break;
-        case 4:
-            console.log.annuler(/*ticket,"paramètre annuler un ticket"*/);
-            break;
-        case 5:
-            console.log.rechercher(/*ticket,"paramètre rechercher un ticket"*/);
-            break;
-        case 6:
-            console.log.trier(/*trajets,"paramètre trier un ticket"*/);
-            break;
-        case 0:
-            console.log("Vous avez quitter")
-            break;
-        default:
-            console.log("Choix invalid");
-    }
-} while (option !== 0)
+// let option;
+// do {
+//     console.log(`================================= 
+//         RAILWAY MANAGER 
+// ================================= 
+// 1. Afficher les trajets 
+// 2. Acheter un ticket 
+// 3. Afficher les tickets 
+// 4. Annuler un ticket 
+// 5. Rechercher un ticket 
+// 6. Filtrer les trajets 
+// 7. Trier les trajets 
+// 0. Quitter `);
+
+//     do {
+//         option = Number(parseInt(prompt('Entrez votre choix : ')))
+//         if (option < 0 || option > 7)
+//             console.log("Choix indisponible !! Essayer ultérierement")
+//     }
+//     while (option < 0 || option > 7);
+
+//     switch (option) {
+//         case 1:
+//             console.log(affichage(trips))
+//             break;
+//         case 2:
+//             console.log.acheter(/*paramètre acheter un tickect*/);
+//             break;
+//         case 3:
+//             console.log.afficher(/*ticket,"paramètre afficher les tickect"*/);
+//             break;
+//         case 4:
+//             console.log.annuler(/*ticket,"paramètre annuler un ticket"*/);
+//             break;
+//         case 5:
+//             console.log.rechercher(/*ticket,"paramètre rechercher un ticket"*/);
+//             break;
+//         case 6:
+//             console.log.trier(/*trajets,"paramètre trier un ticket"*/);
+//             break;
+//         case 0:
+//             console.log("Vous avez quitter")
+//             break;
+//         default:
+//             console.log("Choix invalid");
+//     }
+// } while (option !== 0)
