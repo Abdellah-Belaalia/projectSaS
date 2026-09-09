@@ -184,16 +184,17 @@ const trips = [
 ];
 
 function affichage(trips) {
-    for (let i = 0; i < trips; i++);
-    return trips
-}
+
+    console.log("=== TRAJETS DISPONIBLES ===")
+    for( let traj of trips)
+    console.log( 
+        "#",traj.id, traj.departure, "→", traj.destination, `\n`, 
+        "Départ : ",traj.departureTime, `\n`, 
+        "Arrivé : ", traj.arrivalTime, `\n`, 
+        "Prix : ", traj.price, "DH",`\n`,
+        "Places disponibles : ", traj.availableSeats,"\n")
+    }
 let option;
-
-
-
-
-
-
 do {
     console.log(`================================= 
         RAILWAY MANAGER 
