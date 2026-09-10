@@ -8,7 +8,7 @@ const trips = [
         departureTime: "07:30",
         arrivalTime: "08:30",
         price: 25,
-        availableSeats: 50
+        availableSeats: 46
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ const trips = [
         departureTime: "08:00",
         arrivalTime: "10:30",
         price: 90,
-        availableSeats: 50
+        availableSeats: 47
     },
     {
         id: 3,
@@ -26,7 +26,7 @@ const trips = [
         departureTime: "09:00",
         arrivalTime: "13:00",
         price: 140,
-        availableSeats: 50
+        availableSeats: 48
     },
     {
         id: 4,
@@ -35,7 +35,7 @@ const trips = [
         departureTime: "09:15",
         arrivalTime: "11:00",
         price: 65,
-        availableSeats: 50
+        availableSeats: 49
     },
     {
         id: 5,
@@ -44,7 +44,7 @@ const trips = [
         departureTime: "10:00",
         arrivalTime: "13:30",
         price: 110,
-        availableSeats: 50
+        availableSeats: 48
     },
     {
         id: 6,
@@ -53,7 +53,7 @@ const trips = [
         departureTime: "11:30",
         arrivalTime: "14:30",
         price: 120,
-        availableSeats: 50
+        availableSeats: 49
     },
     {
         id: 7,
@@ -182,7 +182,99 @@ const trips = [
         availableSeats: 50
     }
 ];
-
+const ticket = [
+    {
+        id: 1,
+        passengerName: "ahmed",
+        tripId: 1,
+        seatNumber: 1,
+        price: 25
+    },
+    {
+        id: 2,
+        passengerName: "hamza",
+        tripId: 1,
+        seatNumber: 2,
+        price: 25
+    },
+    {
+        id: 3,
+        passengerName: "salah",
+        tripId: 1,
+        seatNumber: 3,
+        price: 25
+    },
+    {
+        id: 4,
+        passengerName: "nezha",
+        tripId: 2,
+        seatNumber: 1,
+        price: 90
+    },
+    {
+        id: 5,
+        passengerName: "hamid",
+        tripId: 2,
+        seatNumber: 2,
+        price: 90
+    },
+    {
+        id: 6,
+        passengerName: "hafida",
+        tripId: 2,
+        seatNumber: 3,
+        price: 90
+    },
+    {
+        id: 7,
+        passengerName: "malika",
+        tripId: 3,
+        seatNumber: 1,
+        price: 140
+    },
+    {
+        id: 8,
+        passengerName: "souad",
+        tripId: 3,
+        seatNumber: 2,
+        price: 140
+    },
+    {
+        id: 9,
+        passengerName: "aziz",
+        tripId: 4,
+        seatNumber: 1,
+        price: 65
+    },
+    {
+        id: 10,
+        passengerName: "ahmed",
+        tripId: 5,
+        seatNumber: 1,
+        price: 110
+    },
+    {
+        id: 11,
+        passengerName: "nouaal",
+        tripId: 1,
+        seatNumber: 4,
+        price: 25
+    },
+    {
+        id: 12,
+        passengerName: "badr",
+        tripId: 6,
+        seatNumber: 1,
+        price: 120
+    },
+    {
+        id: 13,
+        passengerName: "aya",
+        tripId: 5,
+        seatNumber: 2,
+        price: 110
+    },
+];
 function affichage(trips) {
     console.log("=== TRAJETS DISPONIBLES ===")
     for (let traj of trips) {
@@ -196,15 +288,15 @@ function affichage(trips) {
         }
     }
 }
-let ticketId = 0;
-const tickest = []
+let ticketId = ticket.length + 1; //le tableau commence par la longueur +1 car on a ajouté 13 ticket manuallement
+// let ticketIdSuivt = 1
 function acheter() {
     let passengerName = prompt("Nom de passager :")
     let traject = parseInt(prompt("Entrez le Id de trips : "));
     let trouve = false;
     for (let i = 0; i < trips.length; i++) {
-        if (trips[i].id === traject && trips[i].availableSeats > 0) { 
-            trouve = true
+        if (trips[i].id === traject && trips[i].availableSeats > 0) {  //si le trips id egale le nombre entré par l'utilsisateur *et* les placses disponibles supérieure à 0 le condition est true et on créer une ticket
+            trouve = true;
             let newTicket = {
                 id: ticketId++,
                 passengerName: passengerName,
@@ -212,9 +304,9 @@ function acheter() {
                 seatNumber: 50 - trips[i].availableSeats + 1,   //le nombre des places disponible est 50 ce qu'il fait on doit dimunier le nombre des places ajouté d'après les places disponible puis en ajouter 1 car l'index début d'après 0
                 price: trips[i].price
             }
-            tickest[tickest.length] = newTicket // tickest.push(newTicket); la longueur du tableau est index 0 après la première achate/newTicket 
+            ticket[ticket.length] = newTicket // ticket.push(newTicket); la longueur du tableau est à l'index 0 et ticket egal 1 après la première achate/newTicket 
             trips[i].availableSeats--
-            console.log(`============Ticket acheté avec succès============\nTicket :${ticketId}\nPassenger :${passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPlace : ${newTicket.seatNumber}`)
+            console.log(`============Ticket acheté avec succès============\nTicket :${newTicket.id}\nPassenger :${passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPlace : ${newTicket.seatNumber}`)
             break;
         }
         else if (trips[i].id === traject && trips[i].availableSeats == 0) {
@@ -226,10 +318,12 @@ function acheter() {
         console.log("Trajet introuvable");
     }
 }
-function affichageTick(){
-        for (let i = 0; i < trips.length; i++) 
-    console.log(`========== TICKETS ==========\nTicket :${ticketId}\nPassenger :${passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPrix : ${traj.price}DH"`)
+function affichageTick() {
+    console.log(`\n========== TICKETS ==========`)
+    for (let i = 0; i < ticket.length; i++)
+        console.log(`=================================\n        RAILWAY STATION\nTicket :${ticket[i].id}\nPassenger : ${ticket[i].passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPrix : ${trips[i].price}DH\n=================================`)
 }
+
 
 
 let option;
