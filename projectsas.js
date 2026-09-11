@@ -379,6 +379,7 @@ function rechercher() {
     if (trouve === false) // si la chaîne d'Caract === false(pas trouvée)
         console.log("Il n'y a aucun ticket avec le nom suivant");
 }
+
 let option;
 do {
     console.log(`================================= 
@@ -414,7 +415,7 @@ do {
             annuler(/*ticket,"paramètre annuler un ticket"*/);
             break;
         case 5:
-            console.log.rechercher(/*ticket,"paramètre rechercher un ticket"*/);
+            rechercher();
             break;
         case 6:
             console.log.trier(/*trajets,"paramètre trier un ticket"*/);
