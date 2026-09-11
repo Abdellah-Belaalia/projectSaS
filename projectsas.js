@@ -292,22 +292,22 @@ function affichage(trips) {
 function acheter() {
     let passengerName = prompt("Nom de passager :")
     let traject = parseInt(prompt("Entrez le Id de trips : "));
- //le tableau commence par la longueur +1 car on a ajouté 13 ticket manuallement
+    //le tableau commence par la longueur +1 car on a ajouté 13 ticket manuallement
     let trouve = false;
     for (let i = 0; i < trips.length; i++) {
         if (trips[i].id === traject && trips[i].availableSeats > 0) {  //si le trips id egale le nombre entré par l'utilsisateur *et* les placses disponibles supérieure à 0 le condition est true et on créer une ticket
             trouve = true;
             let seatNumber = 1 // on donne le nombre 1 au seatNumbre 
             let place = true // on cherche la première place disponible
-            while (place){ // on utilise une boucle while parce que on ne sait pas combien des fois elle va tourne
+            while (place) { // on utilise une boucle while parce que on ne sait pas combien des fois elle va tourne
                 place = false;  // on pose que la première place n'a pas disponible
-                  for (let j = 0; j < ticket.length; j++){
-                    if (ticket[j].tripId == trips[i].id && ticket[j].seatNumber == seatNumber){ // on compare le trip ID de ticket avec le id de trip pour savoir si la place est disponible
+                for (let j = 0; j < ticket.length; j++) {
+                    if (ticket[j].tripId == trips[i].id && ticket[j].seatNumber == seatNumber) { // on compare le trip ID de ticket avec le id de trip pour savoir si la place est disponible
                         place = true // si la place est n'a pas disponible 
                         seatNumber++  // on increment la valeur de seat Numbre definie ultérieurement avec 1 pour rechercher la deuxieme place maintenant
                         break;
                     }
-                  }
+                }
             }
             let newTicket = {
                 id: ticketId++,
@@ -380,10 +380,10 @@ function rechercher() {
         console.log("Il n'y a aucun ticket avec le nom suivant");
 }
 function filter() {
-    let searchedDepart = prompt(`Entrez la ville de départ : `)
+    let searchedDepart = prompt(`Entrez la ville de départ : `) 
     let trouve = false // on suppose que "trouve" est faux avant de entrer dans la boucle de tableau 
     for (let i = 0; i < trips.length; i++) { //on tourne dans le tableau des trips 
-        if (trips[i].departure === searchedDepart) { //pour trouve la ville de départ dans le tableau de trips
+        if (trips[i].departure.toLowerCase() === searchedDepart.toLowerCase()) { //pour trouve la ville de départ dans le tableau de trips
             trouve = true
             console.log(`\n${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
         }
@@ -392,7 +392,6 @@ function filter() {
         console.log(`\nIl n'y a aucun départ d\'après cette ville !!`)
     }
 }
-
 let option;
 do {
     console.log(`================================= 
