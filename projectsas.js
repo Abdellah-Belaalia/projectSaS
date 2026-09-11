@@ -275,6 +275,7 @@ let ticket = [
         price: 110
     },
 ];
+let ticketId = ticket.length + 1;
 function affichage(trips) {
     console.log("=== TRAJETS DISPONIBLES ===")
     for (let traj of trips) {
@@ -291,16 +292,28 @@ function affichage(trips) {
 function acheter() {
     let passengerName = prompt("Nom de passager :")
     let traject = parseInt(prompt("Entrez le Id de trips : "));
-    let ticketId = ticket.length + 1; //le tableau commence par la longueur +1 car on a ajouté 13 ticket manuallement
+ //le tableau commence par la longueur +1 car on a ajouté 13 ticket manuallement
     let trouve = false;
     for (let i = 0; i < trips.length; i++) {
         if (trips[i].id === traject && trips[i].availableSeats > 0) {  //si le trips id egale le nombre entré par l'utilsisateur *et* les placses disponibles supérieure à 0 le condition est true et on créer une ticket
             trouve = true;
+            let seatNumber = 1 // on donne le nombre 1 au seatNumbre 
+            let place = true // on cherche la première place disponible
+            while (place){ // on utilise une boucle while parce que on ne sait pas combien des fois elle va tourne
+                place = false;  // on pose que la première place n'a pas disponible
+                  for (let j = 0; j < ticket.length; j++){
+                    if (ticket[j].tripId == trips[i].id && ticket[j].seatNumber == seatNumber){ // on compare le trip ID de ticket avec le id de trip pour savoir si la place est disponible
+                        place = true // si la place est n'a pas disponible 
+                        seatNumber++  // on increment la valeur de seat Numbre definie ultérieurement avec 1 pour rechercher la deuxieme place maintenant
+                        break;
+                    }
+                  }
+            }
             let newTicket = {
                 id: ticketId++,
                 passengerName: passengerName,
                 tripId: trips[i].id,
-                seatNumber: 50 - trips[i].availableSeats + 1,   //le nombre des places disponible est 50 ce qu'il fait on doit dimunier le nombre des places ajouté d'après les places disponible puis en ajouter 1 car l'index début d'après 0
+                seatNumber: seatNumber,   //le nombre des places disponible est 50 ce qu'il fait on doit dimunier le nombre des places ajouté d'après les places disponible puis en ajouter 1 car l'index début d'après 0
                 price: trips[i].price
             }
             ticket.push(newTicket) //ticket[ticket.length] = newTicket ; la longueur du tableau est à l'index 0 et ticket egal 1 après la première achate/newTicket 
@@ -344,6 +357,27 @@ function annuler() {
     if (trouve = false) {
         console.log("Ticket introuvable. ")
     }
+}
+function rechercher() {
+    let passagerName = prompt("Entrez le nom de passager : ")
+    let trouve = false // on suppose que trouve = false avant que la boucle tourne 
+    for (let i = 0; i < ticket.length; i++) {
+        if (ticket[i].passengerName === passagerName) { // si le nom entré par l'utilisateur === le nom trouvé dans le tableau des ticket
+            trouve = true; // on a trouvé la chaîne d'Caract cherchée 
+            let departureCity = "";
+            let destinationCity = "";
+            for (let j = 0; j < trips.length; j++) { // on cherche maintenant dans le tableau des trips
+                if (trips[j].id === ticket[i].tripId) { // si le trip ID === le nombre d'ID de trip dans le tableau de ticket
+                    departureCity = trips[j].departure; // on remplaçe les "string" déjà saisi par la ville de départ
+                    destinationCity = trips[j].destination;
+                    break;
+                }
+            }
+            console.log(`\n====================\n Ticket #${ticket[i].id}\n Trajet : ${departureCity} → ${destinationCity}\n Place : ${ticket[i].seatNumber}\n Prix : ${ticket[i].price}`)
+        }
+    }
+    if (trouve === false) // si la chaîne d'Caract === false(pas trouvée)
+        console.log("Il n'y a aucun ticket avec le nom suivant");
 }
 let option;
 do {
