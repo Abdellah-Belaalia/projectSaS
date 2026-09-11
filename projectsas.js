@@ -379,7 +379,19 @@ function rechercher() {
     if (trouve === false) // si la chaîne d'Caract === false(pas trouvée)
         console.log("Il n'y a aucun ticket avec le nom suivant");
 }
-
+function filter() {
+    let searchedDepart = prompt(`Entrez la ville de départ : `)
+    let trouve = false
+    for (let i = 0; i < trips.length; i++) {
+        if (trips[i].departure === searchedDepart) {
+            trouve = true
+            console.log(`\n${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
+        }
+    }
+    if (trouve === false) {
+        console.log(`\nIl n'y a aucun départ d\'après cette ville !!`)
+    }
+}
 let option;
 do {
     console.log(`================================= 
@@ -418,7 +430,10 @@ do {
             rechercher();
             break;
         case 6:
-            console.log.trier(/*trajets,"paramètre trier un ticket"*/);
+            filter();
+            break;
+        case 7:
+            trier();
             break;
         case 0:
             console.log("Vous avez quitter")
