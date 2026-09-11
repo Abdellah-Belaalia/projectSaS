@@ -344,12 +344,9 @@ function annuler() {
             let confirm = Number(prompt("Entrez votre choix :"));
             trouve = true;
             if (confirm == 1) {
+                trips[ticket[i].tripId-1].availableSeats++
                 ticket.splice(i, 1)
                 console.log("Ticket annulé avec succès.")
-                for (let j = 0; j < trips.length; j++) {
-                    if (trips[j].id == ticket[i].tripId)
-                        trips[j].availableSeats++
-                }
             }
         }
     }
