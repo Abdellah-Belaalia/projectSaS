@@ -392,21 +392,7 @@ function filter() {
         console.log(`\nIl n'y a aucun départ d\'après cette ville !!`)
     }
 }
-function trier() {
-    for (let i = 0; i < trips.length; i++) {
-        for (let j = i; j < trips.length; j++) {
-            if (trips[i].price > trips[j].price) {
-                let temp = trips[i];
-                trips[i] = trips[j];
-                trips[j] = temp;
-            }
-        }
-    }
-    console.log(`\nLes trajets après filtrage par Prix Croissant\n`)
-    for (let i = 0; i < trips.length; i++) {
-        console.log(`\n${i +1} : ${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
-    }
-}
+
 let option;
 do {
     console.log(`================================= 
