@@ -381,15 +381,30 @@ function rechercher() {
 }
 function filter() {
     let searchedDepart = prompt(`Entrez la ville de départ : `)
-    let trouve = false
-    for (let i = 0; i < trips.length; i++) {
-        if (trips[i].departure === searchedDepart) {
+    let trouve = false // on suppose que "trouve" est faux avant de entrer dans la boucle de tableau 
+    for (let i = 0; i < trips.length; i++) { //on tourne dans le tableau des trips 
+        if (trips[i].departure === searchedDepart) { //pour trouve la ville de départ dans le tableau de trips
             trouve = true
             console.log(`\n${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
         }
     }
     if (trouve === false) {
         console.log(`\nIl n'y a aucun départ d\'après cette ville !!`)
+    }
+}
+function trier() {
+    for (let i = 0; i < trips.length; i++) {
+        for (let j = i; j < trips.length; j++) {
+            if (trips[i].price > trips[j].price) {
+                let temp = trips[i];
+                trips[i] = trips[j];
+                trips[j] = temp;
+            }
+        }
+    }
+    console.log(`\nLes trajets après filtrage par Prix Croissant\n`)
+    for (let i = 0; i < trips.length; i++) {
+        console.log(`\n${i +1} : ${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
     }
 }
 let option;
@@ -424,7 +439,7 @@ do {
             affichageTick();
             break;
         case 4:
-            annuler(/*ticket,"paramètre annuler un ticket"*/);
+            annuler();
             break;
         case 5:
             rechercher();
