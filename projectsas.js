@@ -276,7 +276,7 @@ let ticket = [
     },
 ];
 let ticketId = ticket.length + 1;
-function affichage(trips) {
+function affichage() {
     console.log("=== TRAJETS DISPONIBLES ===")
     for (let traj of trips) {
         if (traj.availableSeats > 0) {
@@ -354,8 +354,8 @@ function annuler() {
         }
     }
 
-    if (trouve = false) {
-        console.log("Ticket introuvable. ")
+    if (trouve == false) {
+        console.log("Ticket introuvable.")
     }
 }
 function rechercher() {
@@ -380,7 +380,7 @@ function rechercher() {
         console.log("Il n'y a aucun ticket avec le nom suivant");
 }
 function filter() {
-    let searchedDepart = prompt(`Entrez la ville de départ : `) 
+    let searchedDepart = prompt(`Entrez la ville de départ : `)
     let trouve = false // on suppose que "trouve" est faux avant de entrer dans la boucle de tableau 
     for (let i = 0; i < trips.length; i++) { //on tourne dans le tableau des trips 
         if (trips[i].departure.toLowerCase() === searchedDepart.toLowerCase()) { //pour trouve la ville de départ dans le tableau de trips
@@ -391,6 +391,68 @@ function filter() {
     if (trouve === false) {
         console.log(`\nIl n'y a aucun départ d\'après cette ville !!`)
     }
+}
+function trier() {
+    for (let i = 0; i < trips.length; i++) {
+        for (let j = i; j < trips.length; j++) {
+            if (trips[i].price > trips[j].price) {
+                let temp = trips[i];
+                trips[i] = trips[j];
+                trips[j] = temp;
+            }
+        }
+    }
+    console.log(`\nLes trajets après filtrage par Prix Croissant\n`)
+    for (let i = 0; i < trips.length; i++) {
+        console.log(`\n${i + 1} : ${trips[i].departure} → ${trips[i].destination} : ${trips[i].price}DH\n`)
+    }
+}
+function statistique() {
+    function ticketNumb() {
+        console.log(`Le nombre des ticket vendus est : ${ticket.length}`)
+    };
+    function chiffreDaffaire() {
+        let ticketTotNumb = 0
+        for (let i = 0; i < ticket.length; i++) {
+            ticketTotNumb = ticketTotNumb + ticket[i].price
+        }
+        console.log(`Le chiffre d\'affaire est : ${ticketTotNumb}DH.`)
+    }
+    // function plusVendus() {
+    //     let tripIdPlus = 0
+    //     for (let i = 0; i < trips.length; i++) {
+    //         if (trips[i].availableSeats == ) {
+    //             tripIdPlus = tripIdPlus + ticket[i].tripId
+    //         }
+    //         console.log(`${trips[i].departure} → ${trips[i].destination}\n${tripIdPlus} tickets vendus.`)
+    //     }
+    // }
+    do {
+        console.log(`\n1. Nombre total de tickets vendus \n2. Chiffre d'affaires total \n3. Trajet le plus vendu \n4. Quitter\n`)
+        do {
+            option = parseInt(prompt('Entrez votre choix : '))
+            if (option < 1 || option > 4)
+                console.log("Choix indisponible !! Essayer ultérierement")
+        }
+        while (option < 1 || option > 4);
+        switch (option) {
+            case 1:
+                ticketNumb()
+                break;
+            case 2:
+                chiffreDaffaire();
+                break;
+            // case 3:
+            //     plusVendus();
+            //     break;
+            case 4:
+                console.log("Vous avez quitter")
+                break;
+            default:
+                console.log("Choix invalid");
+        }
+    }
+    while (option !== 4);
 }
 let option;
 do {
@@ -404,18 +466,19 @@ do {
 5. Rechercher un ticket 
 6. Filtrer les trajets 
 7. Trier les trajets 
+8. Statistique
 0. Quitter `);
 
     do {
         option = parseInt(prompt('Entrez votre choix : '))
-        if (option < 0 || option > 7)
+        if (option < 0 || option > 8)
             console.log("Choix indisponible !! Essayer ultérierement")
     }
-    while (option < 0 || option > 7);
+    while (option < 0 || option > 8);
 
     switch (option) {
         case 1:
-            affichage(trips)
+            affichage()
             break;
         case 2:
             acheter();
@@ -434,6 +497,9 @@ do {
             break;
         case 7:
             trier();
+            break;
+        case 8:
+            statistique();
             break;
         case 0:
             console.log("Vous avez quitter")
