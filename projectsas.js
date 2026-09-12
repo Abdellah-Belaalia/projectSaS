@@ -344,15 +344,17 @@ function annuler() {
             let confirm = Number(prompt("Entrez votre choix :"));
             trouve = true;
             if (confirm == 1) {
-                trips[ticket[i].tripId-1].availableSeats++
-                ticket.splice(i, 1)
                 console.log("Ticket annulé avec succès.")
+                for (let j = 0; j < trips.length; j++) {
+                    if (trips[j].id == ticket[i].tripId)
+                        trips[j].availableSeats++
+                }
+                ticket.splice(i, 1)
             }
         }
     }
-
     if (trouve == false) {
-        console.log("Ticket introuvable.")
+        console.log("Ticket introuvable. ")
     }
 }
 function rechercher() {
@@ -415,15 +417,27 @@ function statistique() {
         }
         console.log(`Le chiffre d\'affaire est : ${ticketTotNumb}DH.`)
     }
-    // function plusVendus() {
-    //     let tripIdPlus = 0
-    //     for (let i = 0; i < trips.length; i++) {
-    //         if (trips[i].availableSeats == ) {
-    //             tripIdPlus = tripIdPlus + ticket[i].tripId
-    //         }
-    //         console.log(`${trips[i].departure} → ${trips[i].destination}\n${tripIdPlus} tickets vendus.`)
-    //     }
-    // }
+    function plusVendus() {
+        let maxVendus = 0
+        let tripPlusVendus = "";
+        for (let i = 0; i < trips.length; i++) {
+            let compteur = 0
+            for (let j = 0; j < ticket.length; j++) {
+                if (ticket[j].tripId === trips[i].id) {
+                    compteur++;
+                }
+            }
+            if (compteur > maxVendus) {
+                maxVendus = compteur
+                tripPlusVendus = (`${trips[i].departure} → ${trips[i].destination}`)
+            }
+        }
+        if (maxVendus > 0) {
+            console.log(`Le trajet le plus vendu :\n${tripPlusVendus}\n${maxVendus} tickets vendus`)
+        } else {
+            console.log("Aucun ticket vendu")
+        }
+    }
     do {
         console.log(`\n1. Nombre total de tickets vendus \n2. Chiffre d'affaires total \n3. Trajet le plus vendu \n4. Quitter\n`)
         do {
@@ -439,9 +453,9 @@ function statistique() {
             case 2:
                 chiffreDaffaire();
                 break;
-            // case 3:
-            //     plusVendus();
-            //     break;
+            case 3:
+                plusVendus();
+                break;
             case 4:
                 console.log("Vous avez quitter")
                 break;
