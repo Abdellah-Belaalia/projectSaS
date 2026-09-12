@@ -332,24 +332,36 @@ function acheter() {
 }
 function affichageTick() {
     console.log(`\n========== TICKETS ==========`)
-    for (let i = 0; i < ticket.length; i++)
-        console.log(`=================================\n        RAILWAY STATION\nTicket :${ticket[i].id}\nPassenger : ${ticket[i].passengerName}\nTraject : ${trips[i].departure} → ${trips[i].destination}\nPrix : ${trips[i].price}DH\n=================================`)
+    for (let i = 0; i < ticket.length; i++) { //la boucle tourne sur le tableau de ticket
+        let departureCity = ""
+        let destinationCity = ""
+        for (let j = 0; j < trips.length; j++) { //la boucle tourne sur le tableau de trips
+            if (trips[j].id === ticket[i].tripId) { // si le trip ID === le trip ID dans le ticket 
+                departureCity = trips[j].departure
+                destinationCity = trips[j].destination
+                break; // après donner les valeur aux variables on sort 
+            }
+        }
+        console.log(`=================================\n RAILWAY STATION\nTicket :${ticket[i].id}\nPassenger :${ticket[i].passengerName}\nTraject : ${departureCity} → ${destinationCity}\nPlace : ${ticket[i].seatNumber}\nPrix : ${ticket[i].price}DH\n=================================`)
+    }
 }
 function annuler() {
     let trouve = false;
     let ticketId = parseInt(prompt("Saisissiez l\'Identifiant de ticket : "))
     for (let i = 0; i < ticket.length; i++) {
-        if (ticket[i].id == ticketId) {
+        if (ticket[i].id == ticketId) { //si la boucle tourne est trouve que la valeur entré === ticket ID 
             console.log("Etes-vous sûr de supprimer cette ticket ?\n 1 . Oui\n 2 . Non")
-            let confirm = Number(prompt("Entrez votre choix :"));
+            let confirm = parseInt(prompt("Entrez votre choix :"));
             trouve = true;
             if (confirm == 1) {
                 console.log("Ticket annulé avec succès.")
                 for (let j = 0; j < trips.length; j++) {
-                    if (trips[j].id == ticket[i].tripId)
+                    if (trips[j].id == ticket[i].tripId) {
                         trips[j].availableSeats++
+                        break;
+                    }
                 }
-                ticket.splice(i, 1)
+                ticket.splice(i, 1) // on supprime après d'ajouter la place disponible au tableau de trip car l'index de ticket va dimunier
             }
         }
     }
@@ -375,8 +387,9 @@ function rechercher() {
             console.log(`\n====================\n Ticket #${ticket[i].id}\n Trajet : ${departureCity} → ${destinationCity}\n Place : ${ticket[i].seatNumber}\n Prix : ${ticket[i].price}`)
         }
     }
-    if (trouve === false) // si la chaîne d'Caract === false(pas trouvée)
+    if (trouve === false) {// si la chaîne d'Caract === false(pas trouvée)
         console.log("Il n'y a aucun ticket avec le nom suivant");
+    }
 }
 function filter() {
     let searchedDepart = prompt(`Entrez la ville de départ : `)
@@ -393,7 +406,7 @@ function filter() {
 }
 function trier() {
     for (let i = 0; i < trips.length; i++) {
-        for (let j = i; j < trips.length; j++) {
+        for (let j = i; j < trips.length - i - 1; j++) {
             if (trips[i].price > trips[j].price) {
                 let temp = trips[i];
                 trips[i] = trips[j];
