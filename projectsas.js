@@ -406,7 +406,7 @@ function filter() {
 }
 function trier() {
     for (let i = 0; i < trips.length; i++) {
-        for (let j = i; j < trips.length - i - 1; j++) {
+        for (let j = i + 1; j < trips.length; j++) {
             if (trips[i].price > trips[j].price) {
                 let temp = trips[i];
                 trips[i] = trips[j];
