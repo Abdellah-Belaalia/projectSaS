@@ -351,7 +351,7 @@ function annuler() {
     for (let i = 0; i < ticket.length; i++) {
         if (ticket[i].id == ticketId) { //si la boucle tourne est trouve que la valeur entré === ticket ID 
             console.log("Etes-vous sûr de supprimer cette ticket ?\n 1 . Oui\n 2 . Non")
-            let confirm = parseInt(prompt("Entrez votre choix :"));
+            let confirm = parseInt(prompt("Entrez votre choix : "));
             trouve = true;
             if (confirm == 1) {
                 console.log("Ticket annulé avec succès.")
